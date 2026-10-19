@@ -26,7 +26,7 @@ layout, add a photo and print an A4 PDF. Nothing is uploaded: no account, no ser
 first visit it works in airplane mode. A biodata costs ₹0 to make, which is what makes it a business
 for the shop that sells it.
 
-<!-- TODO: hero screenshot — free text on the left, the printed Traditional biodata on the right -->
+{% embed https://www.youtube.com/watch?v=NxqVWo50pm4 %}
 
 ## What I Built
 
@@ -98,6 +98,10 @@ isn't paying for a lock. It's paying for its name on the page, setup and someone
 a desktop with a recent GPU, tap **Try an example**, then **Fill the form with Gemma**. The first run
 downloads Gemma once (about 1.5 GB, use Wi-Fi). After that, turn on airplane mode and it still works.
 No WebGPU? The form still works by hand.
+
+To see the paid plans, tap **Try a demo Shop key** or **Try a demo Bureau key**, pick the **Royal**
+layout, and the shop's name appears at the foot of the biodata. The 30-second film at the top walks
+through the whole thing.
 
 <!-- TODO: 60–90 s screen recording on the phone, in airplane mode:
      1. open from the home screen  2. Try an example → Fill with Gemma
@@ -255,7 +259,7 @@ The turning points:
 - **What it couldn't test.** The build sandbox had no browser or GPU, so the first real Gemma run was on my
   own phone. <!-- TODO: what happened on that first run, and anything you fixed -->
 
-By the end: <!-- TODO: commit count --> commits, 31 tests, one static page.
+By the end: 12 commits, 31 tests, one static page.
 
 ## Prize Categories
 

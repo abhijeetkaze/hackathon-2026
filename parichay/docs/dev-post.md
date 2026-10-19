@@ -1,5 +1,5 @@
 ---
-title: "Parichay: a marriage biodata that never leaves the phone"
+title: "A biodata is the most private page a family prints. Parichay makes it on the phone, with Gemma"
 published: false
 tags: devchallenge, hf26challenge, gemma, opensource
 cover_image: <!-- TODO: screenshot of a printed Traditional biodata (upload to DEV first) -->
@@ -7,116 +7,233 @@ cover_image: <!-- TODO: screenshot of a printed Traditional biodata (upload to D
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week2-2026-10-12)*
 
+<!-- TODO (2–4 sentences, your own): the moment that started this. A cousin's or friend's biodata,
+     the DTP shop near the station, how long it took, what it cost, the photo on a shared PC.
+     Real detail beats anything I can write here. -->
+
+In Maharashtra, a marriage biodata (परिचय पत्र) is still a printed page. A family collects the details:
+name, birth date and the exact birth time, education, job, salary, father and mother, brothers and
+sisters, which village the mama lives in, gotra, kuldaivat, and a photo. Then someone takes it all to
+the DTP shop. The operator retypes it into a template, charges ₹100–300, and the family's details and
+the photo stay on a shared shop PC, or travel back and forth on WhatsApp.
+
+So I built **Parichay** (परिचय, "introduction"), and said "pa-ri-chay".
+
+**TL;DR.** You type the details the way you'd say them, in Marathi, Hindi, English or a mix.
+**Gemma, running on the phone**, fills in a form. Code, not the model, turns "sakali 6:40" into
+*सकाळी ६:४० वा.*, and every number on the page. You check it, pick a Marathi, English or bilingual
+layout, add a photo and print an A4 PDF. Nothing is uploaded: no account, no server, and after the
+first visit it works in airplane mode. A biodata costs ₹0 to make, which is what makes it a business
+for the shop that sells it.
+
+<!-- TODO: hero screenshot — free text on the left, the printed Traditional biodata on the right -->
+
 ## What I Built
 
-**Try it:** <!-- TODO: Render URL --> · **Code:** [github.com/abhijeetkaze/hackathon-2026/tree/main/parichay](https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay)
+- **Say it once.** One text box. *"Mulga. Naav Rohan Suresh Patil. Janma 12 March 1997, sakali 6:40,
+  Pune. Uchi 5'9". BE Mechanical, COEP 2019…"* Marathi, Hinglish and English all work, and "Try an
+  example" fills in a sample so you can see it straight away.
+- **Gemma fills the form.** About 25 fields: personal details, education and work, family, horoscope
+  details, contact and expectations. It also proposes the Marathi spelling of every name.
+- **You check it.** Every field is editable. Marathi name spellings, and any date, time or height the
+  code couldn't read for certain, are marked **check**. Nothing is guessed.
+- **Blank means left out.** Any field you leave empty doesn't appear on the biodata. Families differ
+  a lot in what they put on one, and the form shouldn't decide that for them.
+- **Three layouts.** Traditional Marathi (॥ श्री गणेशाय नमः ॥, a maroon double border, Devanagari
+  digits), Modern English, and Bilingual with both scripts on every line. Add a photo and it sits in
+  the corner.
+- **Print it.** Print → Save as PDF gives an A4 page the shop can print or the family can send.
 
-In Maharashtra, a marriage biodata (परिचय पत्र) is still a printed page. A family gathers the details:
-name, birth date and time, education, job, father and mother, siblings, the mama's village, gotra,
-kuldaivat, a photo. Then someone takes it to the DTP shop near the station. The operator retypes
-everything into a template, charges ₹100–300, and the family's details and the photo stay on a shared
-shop PC, or go back and forth on WhatsApp.
+**Why not just paste it into ChatGPT?** You can, for one biodata. But the details go to a server you
+don't control, a chat model will happily "correct" a birth time or convert a date wrongly in a
+confident voice, and you still have to lay out a Marathi page yourself. Parichay keeps the details on
+the phone, never lets the model write a number, and ends with a print-ready page.
 
-**Parichay** does that job on a phone:
-
-1. **Type it the way you'd say it.** *"Mulga. Naav Rohan Suresh Patil. Janma 12 March 1997, sakali 6:40, Pune. Uchi 5'9"…"* Marathi, Hindi, English or a mix.
-2. **Gemma, running on the phone, fills in a form.** You check every field. Name spellings in Marathi and anything Parichay couldn't read for certain are marked *check*.
-3. **Pick a layout and print.** Traditional Marathi, Modern English or Bilingual, with the photo, as an A4 PDF.
-
-Nothing is uploaded. There is no server and no account, and after the first visit it works in airplane mode.
-
-**Who pays:** the DTP shop owner. A 20-minute retyping job becomes a two-minute check, and the ₹150 is
-all margin because each biodata costs ₹0 to produce. Marriage bureaus (vadhu-var suchak mandals) are
-the second customer: they make biodatas for every member and want them consistent.
-
-<!-- TODO: first user. Show it to a DTP / print shop near you. What did they say? Would they pay, and how much?
-     What did they ask for next? 3–5 honest sentences. This is the "bonus points" part. -->
+**Who pays?** The DTP and print shops that already make biodatas. A 15–20 minute retyping job becomes
+a two-minute check, and because each biodata costs nothing to produce, the ₹150 they charge is all
+margin. The second customer is the vadhu-var suchak mandal (marriage bureau), which makes biodatas
+for every member and wants them consistent.
 
 ## Demo
 
-<!-- TODO: 60–90 s screen recording on the phone:
-     1. Airplane mode ON, open the app from the home screen.
-     2. Paste/type the example, tap "Fill the form with Gemma".
-     3. Show the filled form and a "check" chip on the Marathi name; correct it.
-     4. Switch Traditional → Bilingual, add a photo.
-     5. Print → Save as PDF, open the PDF. -->
+**Try it:** <!-- TODO: Render URL (or your .tech domain) -->. Open it in Chrome on an Android phone or
+a desktop with a recent GPU, tap **Try an example**, then **Fill the form with Gemma**. The first run
+downloads Gemma once (about 1.5 GB, use Wi-Fi). After that, turn on airplane mode and it still works.
+No WebGPU? The form still works by hand.
 
-<!-- TODO: screenshot row: the free text, the filled form, the printed Traditional biodata -->
+<!-- TODO: 60–90 s screen recording on the phone, in airplane mode:
+     1. open from the home screen  2. Try an example → Fill with Gemma
+     3. a "check" chip on the Marathi name; fix it  4. switch Traditional → Bilingual, add a photo
+     5. Print → Save as PDF, open the PDF -->
+
+<!-- TODO: screenshot row — the free text, the filled form with a "check" chip, the printed PDF -->
+
+## Code
+
+{% github abhijeetkaze/hackathon-2026 %}
+
+The project lives in [`parichay/`](https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay).
+One static page, no backend, no dependencies and no build step: the browser loads plain ES modules,
+and the domain logic has 21 `node:test` tests.
 
 ## How I Built It
 
-One static page, no backend and no build step. The browser loads plain ES modules, the domain is pure
-JavaScript with 21 `node:test` tests, and a service worker makes it work offline.
+### Gemma reads, code decides
 
-### Gemma on the phone, with a narrow job
+A biodata gets matched on its birth time and date, so a wrong one is worse than a blank one. So I
+split the work the same way every time:
 
-The extraction runs **Gemma 2 2B** through [WebLLM](https://github.com/mlc-ai/web-llm), which compiles
-models to WebGPU. It downloads once (about 1.5 GB on Wi-Fi) and then runs on the phone's GPU.
+- **Gemma** finds each value in the text and **copies it as written** into a JSON object. Its only
+  creative job is proposing a Devanagari spelling for names, and those always come back marked *check*.
+- **Code** turns what Gemma copied into dates, times and heights, and formats them for the page.
+  If the code can't read something, the field stays empty and is flagged. It never guesses.
+- **Labels** (जन्म तारीख, शिक्षण, वडिलांचे नाव, मामा, कुलदैवत…) are fixed strings in one file. The model
+  never sees them, so it can't mistranslate a heading.
 
-I gave the model as small a job as I could: **find each value in the text and copy it into a JSON
-object.** The one creative thing it does is propose a Devanagari spelling for each name, and those
-fields always come back marked *check*, because "Patil" → "पाटील" is easy but plenty of names aren't.
+The parsers are where the Maharashtra-specific knowledge lives:
 
-I used Gemma 2 2B rather than the smaller Gemma 3 1B on purpose. In my last project, Gemma 3 1B
-under WebLLM repeated itself on long prompts, because WebLLM gives the whole model one attention
-window and Gemma 3 mixes short local windows with global ones. A biodata prompt is a schema plus the
-family's text, so I wanted a model whose window matches its context.
+| What people write | What the code makes of it | Printed (Marathi) |
+| --- | --- | --- |
+| `sakali 6:40`, `सकाळी ६.४०` | 06:40 | सकाळी ६:४० वा. |
+| `sandhyakali 6.40` | 18:40 | संध्याकाळी ६:४० वा. |
+| `ratri 2:30` | 02:30, because "night" at 2:30 is after midnight | पहाटे २:३० वा. |
+| `12/03/1997` | 12 March, day first the Indian way | १२ मार्च १९९७ |
+| `5.9` | 5 ft 9 in, because that's how people write it, not 5.9 feet | ५ फूट ९ इंच |
+| `31/02/1997`, `holi 97` | nothing: left empty and flagged *check* | — |
 
-<!-- TODO: real numbers from your phone: model, time to fill, how many fields right on the example -->
+Phone numbers keep their English digits even on the Marathi layout, because people need to dial them.
 
-### The model never writes a number that gets printed
+<!-- TODO: real numbers from your phone, e.g. "On the example text, Gemma 2 2B filled N of M fields
+     correctly in X s on a <phone model>; the misses were …". Even one honest run is worth adding. -->
 
-A wrong birth time on a biodata is worse than a blank one, because people match horoscopes on it. So
-Gemma copies the user's words ("sakali 6:40"), and code does the rest:
+### Why Gemma 2 2B and not the smaller Gemma 3 1B
 
-- `parseTime` reads Marathi parts of the day (पहाटे, सकाळी, दुपारी, संध्याकाळी, रात्री) to settle AM
-  or PM, and `formatTime` prints **सकाळी ६:४० वा.**
-- `parseDate` reads "12 March 1997", "12/03/1997" (day first, the Indian way) and "१२ मार्च १९९७".
-- `parseHeight` reads 5'9", "5.9" (which is how people write 5 ft 9 in), 175 cm and "५ फूट ९ इंच".
+In my previous project, Gemma 3 1B under WebLLM started repeating itself on long prompts. WebLLM gives
+the whole model a single attention window, and Gemma 3 mixes short local windows with global ones, so
+a long prompt either overflows the local layers or gets forgotten. A biodata prompt is a field list
+plus a family's paragraph, so I used Gemma 2 2B, whose window matches its context. It's a bigger
+download, but it reads the whole prompt. The pick is a small pure function: f16 weights when the GPU
+supports them (half the memory), f32 otherwise.
 
-If the code can't read a value, the field stays empty and is flagged. It never guesses.
+The prompt goes in the user turn, because Gemma's chat template has no system role. The reply is
+parsed defensively: code fences, chatter before the JSON and trailing commas are all tolerated,
+and unknown keys are dropped.
 
-### Labels are fixed, blanks are left out
+### The browser is the only thing that prints Marathi right
 
-Every label (जन्म तारीख, शिक्षण, वडिलांचे नाव, मामा, कुलदैवत…) is a fixed string in one file, so the
-model can't mistranslate a heading. Any field left blank is left off the page. Families differ a lot
-in what they put on a biodata, and the form shouldn't decide that for them.
+My first instinct was a JavaScript PDF library. They don't shape Devanagari: conjuncts like क्ष, ज्ञ
+and र्य come apart into loose letters. Browsers already shape Devanagari correctly, so the biodata is
+an HTML page set in Noto Serif Devanagari, laid out in A4 millimetres, and printed with
+`@page { size: A4; margin: 0 }`. "Save as PDF" in the print dialog makes the file.
 
-### The browser is the only thing that prints Marathi correctly
+On screen the same sheet has to fit a phone. Every size on the sheet is written in one CSS variable,
+`--u`, which equals one millimetre of A4. In the preview `--u` is `100cqw / 210` (a 210th of the
+preview's width), so the page scales to any screen; in print it's exactly `1mm`.
 
-My first instinct was a JS PDF library. Those libraries don't shape Devanagari: conjuncts like क्ष,
-ज्ञ and र्य come apart into separate letters. The browser's text engine shapes them correctly, so the
-biodata is an HTML page set in Noto Serif Devanagari, sized in A4 millimetres with `@page { size: A4 }`,
-and "Save as PDF" in the print dialog produces the file. On screen, the same sheet is sized in a CSS
-unit tied to the preview's width, so the A4 page scales down to any phone.
+### Nothing to leak
 
-### Works without the AI too
+The state is a JavaScript object in memory. Nothing goes to `localStorage`. The photo becomes an
+object URL that never leaves the page. A service worker caches the app, the fonts and the WebLLM
+module; WebLLM keeps the Gemma weights in its own cache. A test checks that the service worker
+precaches every file the app needs, because one missing file silently breaks offline mode.
 
-If the browser has no WebGPU, the form still works by hand. The AI saves time, but the app doesn't
-depend on it.
+### The bug I caught
+
+Birth times are where Marathi and English collide. My first parser treated "pm" and "ratri" (night)
+the same way, and it also knew that "ratri 2:30" means 2:30 in the morning. So **"2:30 pm" came out
+as 2:30 a.m.**, because the night rule fired for "pm" too. On a biodata that's the wrong horoscope.
+The fix was to split them: "pm" means afternoon, and only the Marathi night words get the
+after-midnight rule. There's a test for both now.
+
+### The rest
+
+- **Gemma:** Gemma 2 2B, q4f16 (or q4f32), through WebLLM on WebGPU, loaded from a CDN at runtime.
+- **Fonts:** Noto Serif Devanagari, Noto Sans Devanagari and Noto Serif from Google Fonts, cached for offline.
+- **Hosting:** a Render static site from one `render.yaml`, which runs the tests as its build step.
+- **Design:** maroon and saffron, the colours of a wedding card. Light and dark for the app; the
+  sheet itself is always paper.
+
+<!-- TODO: screenshot of the Render dashboard showing the parichay static site -->
 
 ## Why Does Open Innovation Matter?
 
-Because a biodata is the most personal page a family prints: a young person's photo, their birth
-time, their salary, their parents' jobs, which village the mama lives in. The honest answer to "where
-does this data go?" should be "nowhere", and with a closed API it can't be.
+**Because a biodata is private.** It's a young person's photo, exact birth time, salary and parents'
+jobs. The honest answer to "where does this go?" should be "nowhere", and with a hosted API it can't
+be. With open weights, Gemma runs on the phone and the details are never sent anywhere.
 
-With open weights it can. Gemma runs on the phone, so the details are never sent anywhere, and that
-holds even in a shop with no internet. It also makes the business work: the shop pays nothing per
-biodata, there's no API key to leak or bill to pay, and no provider can change the price or switch
-the model off.
+**Because the business only works at ₹0 a biodata.**
 
-It also matters who can change it. Everything here is open: Gemma's weights, WebLLM, the fonts and
-the code. A bureau in Kolhapur can add their own layout, someone can add Gujarati or Kannada labels,
-and nobody needs anyone's permission to do it.
+| | Time per biodata | Cost to make one |
+| --- | --- | --- |
+| Retyping at the DTP shop today | 15–20 min | the operator's time |
+| Parichay with Gemma on the phone | <!-- TODO: measured --> | ₹0 |
+
+With a paid API, the shop would be paying per biodata to a company abroad, and holding a key that can
+leak or a bill that can change. With open weights there's nothing to meter.
+
+**Because it works where the shop is.** A small shop's internet is flaky. Once Gemma is downloaded,
+Parichay doesn't need it.
+
+**Because nobody can take it away, and anyone can change it.** Gemma's weights, WebLLM, the Noto fonts
+and Parichay's code are all open. A bureau in Kolhapur can add its own layout; someone can add Gujarati
+or Kannada labels. No permission needed.
+
+**Where a closed model would do better:** Marathi spelling. A large hosted model would transliterate
+names more reliably than a 2B model on a phone. That's why name spellings are always marked *check* and
+the person confirms them, and I think that's a fair price for keeping a family's details off a server.
+It also costs a 1.5 GB download and a phone with WebGPU, and the form still works by hand without one.
+
+## My First User
+
+<!-- TODO — the "bonus points" part. Show Parichay to one DTP / print shop or marriage bureau near you,
+     then write 4–6 honest sentences:
+       - who they are (no names needed): "the print shop next to <place>"
+       - what they do today, and what they charge
+       - what happened when they tried it: what they liked, what confused them
+       - would they pay? how much? did they?
+       - what they asked for next (e.g. more layouts, a horoscope box, Hindi labels)
+     If you couldn't reach anyone in time, say so plainly and say who you'll show it to first.
+     Don't invent this part — judges can tell, and an honest "not yet" reads better. -->
+
+## My Agent Session & How I Built It With Claude Code
+
+I built Parichay in one morning with Claude Code, inside the last few hours of the Week 2 window. I made
+the calls; Claude Code wrote the code and tests, and checked them as it went.
+
+<!-- TODO: embed the DevRelay session here (optional, but judges like it) -->
+
+The turning points:
+
+- **Picking the idea.** I asked for ideas that weren't already in the ~200 Week 2 entries (receipt
+  sorters, invoice chasers and listing writers were everywhere) and that were rooted in Pune and
+  Maharashtra. Out of a shortlist I picked the biodata maker.
+- **Checking the clock first.** Before any code, it checked the deadline: Week 2 closes at 11:59 PM PDT
+  on Oct 18, which was 12:29 PM IST the morning I built it.
+- **Voice or not.** Voice input would have meant a cloud speech-to-text service, and that breaks the one
+  promise the app makes. Typed input only, so "nothing leaves the phone" stays true.
+- **"Gemma reads, code decides"** came out of the first plan: the model copies values and code owns every
+  number, label and layout.
+- **Carrying over lessons** from my Week 1 project: Gemma 2 2B instead of Gemma 3 1B, and no bundler.
+- **The ratri / pm bug** above, caught while writing the time parser.
+- **What it couldn't test.** The build sandbox had no browser or GPU, so the first real Gemma run was on my
+  own phone. <!-- TODO: what happened on that first run, and anything you fixed -->
+
+By the end: <!-- TODO: commit count --> commits, 21 tests, one static page.
 
 ## Prize Categories
 
 - **Best Use of Gemma**: Gemma 2 2B runs entirely on the phone through WebLLM and turns free-form
-  Marathi, Hindi and English into a structured biodata, with code handling every number.
-- **Best Use of Render**: the whole app is a Render static site, deployed from one `render.yaml`.
+  Marathi, Hindi and English into a structured biodata. It copies values and proposes Devanagari names;
+  code handles every number and label, so the model can't put a wrong birth time on the page.
+- **Best Use of Render**: the whole app is a Render static site deployed from one `render.yaml`, with the
+  test suite as the build step, so a failing test never deploys.
   <!-- TODO: remove if not deployed on Render -->
+- **Best Use of a .tech Domain**: <!-- TODO: only if you claim one at hacktoberfest.com/my/promos and point
+  it at the Render site, e.g. parichay.tech. Otherwise delete this line. -->
+- **Best Use of ElevenLabs**: <!-- TODO: only if you narrate the demo video with ElevenLabs (the category
+  allows "generate narration for your demo"). The app itself never uses it, so the family's details
+  still never leave the phone. Otherwise delete this line. -->
 
 ---
 
-*Built solo in Pune, October 2026.*
+*Built solo in Pune, October 2026. I drafted this post with Claude Code and edited it myself.*

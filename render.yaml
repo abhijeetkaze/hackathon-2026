@@ -7,6 +7,8 @@ services:
     rootDir: parichay
     buildCommand: npm test
     staticPublishPath: web
+    buildFilter:
+      paths: ["parichay/**"] # only redeploy when this project changes
     headers:
       - path: /sw.js
         name: Cache-Control

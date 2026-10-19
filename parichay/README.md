@@ -7,7 +7,7 @@ phone** and fills in a form. You check it, pick a layout, add a photo and print 
 or bilingual biodata as an A4 PDF. No account, no server, nothing uploaded.
 
 Built for the [DEV Hacktoberfest 2026 Open-Source AI Challenge, Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week2-2026-10-12).
-Project started **2026-10-19**.
+Project started **2026-10-18** (US Pacific time, the contest's timezone).
 
 ## Who it's for
 

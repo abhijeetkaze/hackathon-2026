@@ -1,0 +1,15 @@
+{
+  "name": "parichay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marriage biodata maker. Gemma runs on the phone, so a family's details never leave it.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "serve": "npx --yes http-server web -p 8080 -c-1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

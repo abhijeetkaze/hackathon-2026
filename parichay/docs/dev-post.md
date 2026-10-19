@@ -56,7 +56,7 @@ for every member and wants them consistent.
 
 ## Demo
 
-**Try it:** <!-- TODO: Render URL (or your .tech domain) -->. Open it in Chrome on an Android phone or
+**Try it:** [parichay-uq3d.onrender.com](https://parichay-uq3d.onrender.com). Open it in Chrome on an Android phone or
 a desktop with a recent GPU, tap **Try an example**, then **Fill the form with Gemma**. The first run
 downloads Gemma once (about 1.5 GB, use Wi-Fi). After that, turn on airplane mode and it still works.
 No WebGPU? The form still works by hand.
@@ -224,13 +224,8 @@ By the end: <!-- TODO: commit count --> commits, 21 tests, one static page.
   Marathi, Hindi and English into a structured biodata. It copies values and proposes Devanagari names;
   code handles every number and label, so the model can't put a wrong birth time on the page.
 - **Best Use of Render**: the whole app is a Render static site deployed from one `render.yaml`, with the
-  test suite as the build step, so a failing test never deploys.
-  <!-- TODO: remove if not deployed on Render -->
-- **Best Use of a .tech Domain**: <!-- TODO: only if you claim one at hacktoberfest.com/my/promos and point
-  it at the Render site, e.g. parichay.tech. Otherwise delete this line. -->
-- **Best Use of ElevenLabs**: <!-- TODO: only if you narrate the demo video with ElevenLabs (the category
-  allows "generate narration for your demo"). The app itself never uses it, so the family's details
-  still never leave the phone. Otherwise delete this line. -->
+  test suite as the build step, so a failing test never deploys. Live at
+  [parichay-uq3d.onrender.com](https://parichay-uq3d.onrender.com).
 
 ---
 

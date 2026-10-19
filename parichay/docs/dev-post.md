@@ -200,8 +200,6 @@ It also costs a 1.5 GB download and a phone with WebGPU, and the form still work
 I built Parichay in one morning with Claude Code, inside the last few hours of the Week 2 window. I made
 the calls; Claude Code wrote the code and tests, and checked them as it went.
 
-<!-- TODO: embed the DevRelay session here (optional, but judges like it) -->
-
 The turning points:
 
 - **Picking the idea.** I asked for ideas that weren't already in the ~200 Week 2 entries (receipt

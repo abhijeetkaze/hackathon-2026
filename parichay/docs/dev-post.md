@@ -49,10 +49,43 @@ don't control, a chat model will happily "correct" a birth time or convert a dat
 confident voice, and you still have to lay out a Marathi page yourself. Parichay keeps the details on
 the phone, never lets the model write a number, and ends with a print-ready page.
 
-**Who pays?** The DTP and print shops that already make biodatas. A 15–20 minute retyping job becomes
-a two-minute check, and because each biodata costs nothing to produce, the ₹150 they charge is all
-margin. The second customer is the vadhu-var suchak mandal (marriage bureau), which makes biodatas
-for every member and wants them consistent.
+## How It Makes Money
+
+Two people earn from Parichay: the person making biodatas, and me.
+
+**Their side hustle.** Families already pay someone to make a biodata. Today that's the DTP shop near
+the station, and the job is 15–20 minutes of retyping. With Parichay it's a two-minute check and a print.
+So it works for:
+
+- **DTP and print shops**, which already sell biodatas. At ₹150 a biodata, even five a week is about
+  ₹3,000 a month, and the time saved goes to other print jobs.
+- **The person everyone in the building asks for help with their phone.** With Parichay on their phone,
+  they can make biodatas for neighbours and relatives for ₹100 each. They don't need a shop, a PC or
+  design software. A biodata costs them ₹0 to make, so the whole ₹100 is income.
+- **Vadhu-var suchak mandals (marriage bureaus)**, which make a biodata for every member and want them
+  all to look the same.
+
+**How I earn.** Parichay stays free and open source for any family that wants to make their own. What I
+sell is the version a business wants:
+
+| Plan | Price | What they get |
+| --- | --- | --- |
+| Free | ₹0 | The app, all three layouts, on any phone |
+| **Shop** | **₹499 once** | Their shop's name and number in a small footer on every biodata they print (free advertising every time a family forwards it on WhatsApp), more wedding-card layouts, and setup on their phone with Gemma already downloaded, plus WhatsApp support |
+| **Bureau** | **₹1,999 a year** | The bureau's own branding and layout, and help adding new members' biodatas |
+
+**My costs are close to zero.** Gemma runs on the customer's phone, so there's no API bill and no
+per-biodata cost. The site is a free Render static site. So every sale is profit, and the first sale
+covers the whole business.
+
+**Why sell something that's open source?** A shop isn't paying for the code. It's paying for its name
+on the page, for layouts, and for someone to set it up and answer the phone. Anyone can build it
+themselves from the repo, and that's fine.
+
+<!-- TODO: be honest about status. The Shop and Bureau plans are what you'll offer; say so plainly, e.g.
+     "The Shop plan isn't built yet. The footer is a small change, and I'll build it for the first shop that
+     says yes." Then put the real answer from your first user here: would they pay ₹499? What did they say
+     about the price? If a shop quotes you a different price for biodatas than ₹100–300, use theirs. -->
 
 ## Demo
 
@@ -163,13 +196,14 @@ be. With open weights, Gemma runs on the phone and the details are never sent an
 
 **Because the business only works at ₹0 a biodata.**
 
-| | Time per biodata | Cost to make one |
-| --- | --- | --- |
-| Retyping at the DTP shop today | 15–20 min | the operator's time |
-| Parichay with Gemma on the phone | <!-- TODO: measured --> | ₹0 |
+| | Time per biodata | Cost to make one | What's left of a ₹150 biodata |
+| --- | --- | --- | --- |
+| Retyping at the DTP shop today | 15–20 min | the operator's time | ₹150, for 20 minutes of work |
+| Parichay with Gemma on the phone | <!-- TODO: measured --> | ₹0 | ₹150, for two minutes of work |
 
-With a paid API, the shop would be paying per biodata to a company abroad, and holding a key that can
-leak or a bill that can change. With open weights there's nothing to meter.
+With a paid API, every biodata would cost the shop money paid to a company abroad, and I'd have to
+charge a monthly subscription to cover the tokens. With open weights there's nothing to meter, so I can
+sell the Shop plan once for ₹499 and step out of the way.
 
 **Because it works where the shop is.** A small shop's internet is flaky. Once Gemma is downloaded,
 Parichay doesn't need it.

@@ -82,10 +82,10 @@ covers the whole business.
 on the page, for layouts, and for someone to set it up and answer the phone. Anyone can build it
 themselves from the repo, and that's fine.
 
-<!-- TODO: be honest about status. The Shop and Bureau plans are what you'll offer; say so plainly, e.g.
-     "The Shop plan isn't built yet. The footer is a small change, and I'll build it for the first shop that
-     says yes." Then put the real answer from your first user here: would they pay ₹499? What did they say
-     about the price? If a shop quotes you a different price for biodatas than ₹100–300, use theirs. -->
+**Where it stands.** The free app is live today. The Shop and Bureau plans are what I'll offer next, and
+they aren't built yet. The shop's footer is a small change to the layouts, and I'll build it for the
+first shop that says yes. Until then, the free version already does the part a shop would pay for: two
+minutes instead of twenty.
 
 ## Demo
 

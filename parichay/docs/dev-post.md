@@ -71,21 +71,26 @@ sell is the version a business wants:
 | Plan | Price | What they get |
 | --- | --- | --- |
 | Free | ₹0 | The app, all three layouts, on any phone |
-| **Shop** | **₹499 once** | Their shop's name and number in a small footer on every biodata they print (free advertising every time a family forwards it on WhatsApp), more wedding-card layouts, and setup on their phone with Gemma already downloaded, plus WhatsApp support |
-| **Bureau** | **₹1,999 a year** | The bureau's own branding and layout, and help adding new members' biodatas |
+| **Shop** | **₹499 once** | Their shop's name and number in a small footer on every biodata they print (free advertising every time a family forwards it on WhatsApp), the Royal layout, and setup on their phone with Gemma already downloaded, plus WhatsApp support |
+| **Bureau** | **₹1,999 a year** | Everything in Shop, plus the bureau's name and the member's number at the top of each biodata |
 
 **My costs are close to zero.** Gemma runs on the customer's phone, so there's no API bill and no
 per-biodata cost. The site is a free Render static site. So every sale is profit, and the first sale
 covers the whole business.
 
-**Why sell something that's open source?** A shop isn't paying for the code. It's paying for its name
-on the page, for layouts, and for someone to set it up and answer the phone. Anyone can build it
-themselves from the repo, and that's fine.
+**It's built, and it works offline too.** A shop pays me on WhatsApp/UPI and gets a licence key. They
+paste it in once, and the phone checks it with an Ed25519 signature, with no server involved. The shop's
+name on the biodata comes from inside the signed key, so one shop's key can't print another shop's name.
+A Bureau key carries an end date. The only things saved on the phone are the key and the shop's number,
+never a family's details. To see it, tap **Try a demo Shop key** or **Try a demo Bureau key** in the app.
 
-**Where it stands.** The free app is live today. The Shop and Bureau plans are what I'll offer next, and
-they aren't built yet. The shop's footer is a small change to the layouts, and I'll build it for the
-first shop that says yes. Until then, the free version already does the part a shop would pay for: two
-minutes instead of twenty.
+**₹499 pays for itself after four biodatas.** At ₹150 each, the fourth biodata a shop makes has
+covered the plan, and every one after that carries the shop's name and number to another family.
+
+The code is open, so anyone could remove the check and run their own copy. I'm fine with that. A shop
+isn't paying for a lock. It's paying for its name on the page, setup and someone to call.
+
+<!-- TODO: put your real buying contact (WhatsApp / UPI) in BUY_URL in web/js/main.js and in the README. -->
 
 ## Demo
 
@@ -107,7 +112,7 @@ No WebGPU? The form still works by hand.
 
 The project lives in [`parichay/`](https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay).
 One static page, no backend, no dependencies and no build step: the browser loads plain ES modules,
-and the domain logic has 21 `node:test` tests.
+and the domain logic has 31 `node:test` tests.
 
 ## How I Built It
 
@@ -250,7 +255,7 @@ The turning points:
 - **What it couldn't test.** The build sandbox had no browser or GPU, so the first real Gemma run was on my
   own phone. <!-- TODO: what happened on that first run, and anything you fixed -->
 
-By the end: <!-- TODO: commit count --> commits, 21 tests, one static page.
+By the end: <!-- TODO: commit count --> commits, 31 tests, one static page.
 
 ## Prize Categories
 

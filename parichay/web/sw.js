@@ -4,7 +4,7 @@
 //   Gemma weights               → left to WebLLM, which keeps them in its own Cache Storage
 // Bump VERSION when shell files change.
 
-const VERSION = "1";
+const VERSION = "2";
 const SHELL = `parichay-shell-${VERSION}`;
 const RUNTIME = "parichay-runtime";
 const PRECACHE = [
@@ -18,6 +18,7 @@ const PRECACHE = [
   "./js/domain/biodata.js",
   "./js/domain/extract.js",
   "./js/domain/format.js",
+  "./js/domain/licence.js",
   "./js/domain/render.js",
 ];
 const RUNTIME_HOSTS = ["esm.run", "cdn.jsdelivr.net", "fonts.googleapis.com", "fonts.gstatic.com"];

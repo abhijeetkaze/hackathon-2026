@@ -7,7 +7,34 @@ export const LAYOUTS = [
   { id: "traditional", name: "Traditional (Marathi)", lang: "mr" },
   { id: "modern", name: "Modern (English)", lang: "en" },
   { id: "bilingual", name: "Bilingual", lang: "both" },
+  { id: "royal", name: "Royal (Marathi)", lang: "mr", paid: true },
 ];
+
+/** Paid layouts need a Shop or Bureau licence. */
+export function layoutAllowed(layoutId, licence) {
+  const layout = LAYOUTS.find((l) => l.id === layoutId);
+  return Boolean(layout) && (!layout.paid || Boolean(licence));
+}
+
+const PREPARED = { mr: "तयार करणारे", en: "Prepared by", both: "तयार करणारे / Prepared by" };
+const MEMBER = { mr: "सभासद क्र.", en: "Member no.", both: "सभासद क्र. / Member no." };
+
+/**
+ * The licensed business's lines on the sheet: a "prepared by" footer for every plan, and for a
+ * bureau a header strip with its name and the member's number. Empty strings without a licence.
+ */
+export function businessLines(business, lang) {
+  if (!business?.plan || !business.name) return { header: "", footer: "" };
+  const phone = business.phone?.trim();
+  const footer = `${PREPARED[lang]} : ${business.name}${phone ? ` · ${phone}` : ""}`;
+  let header = "";
+  if (business.plan === "bureau") {
+    const no = business.memberNo?.trim();
+    const memberNo = no ? (lang === "mr" ? toMarathiDigits(no) : no) : "";
+    header = memberNo ? `${business.name} · ${MEMBER[lang]} ${memberNo}` : business.name;
+  }
+  return { header, footer };
+}
 
 export function escapeHtml(s) {
   return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -56,10 +83,17 @@ export function sectionsFor(b, lang) {
   })).filter((s) => s.rows.length > 0);
 }
 
-/** The full sheet. `photoUrl` is an object URL that never leaves the browser. */
-export function renderBiodata(b, layoutId, photoUrl = "") {
-  const layout = LAYOUTS.find((l) => l.id === layoutId) ?? LAYOUTS[0];
+/**
+ * The full sheet. `photoUrl` is an object URL that never leaves the browser.
+ * `business` is { plan, name, phone, memberNo } from a verified licence, or null.
+ */
+export function renderBiodata(b, layoutId, photoUrl = "", business = null) {
+  const wanted = LAYOUTS.find((l) => l.id === layoutId) ?? LAYOUTS[0];
+  const layout = layoutAllowed(wanted.id, business) ? wanted : LAYOUTS[0];
   const lang = layout.lang;
+  const lines = businessLines(business, lang);
+  const bureauStrip = lines.header ? `<p class="bureau">${escapeHtml(lines.header)}</p>` : "";
+  const prepared = lines.footer ? `<footer class="prepared">${escapeHtml(lines.footer)}</footer>` : "";
   const nameLang = lang === "both" ? "en" : lang;
   const name = fieldValue(FIELDS[0], b, nameLang);
   const subName = lang === "both" ? b.fullNameMr : "";
@@ -78,6 +112,7 @@ export function renderBiodata(b, layoutId, photoUrl = "") {
 
   return `<article class="sheet sheet-${layout.id}" lang="${lang === "en" ? "en" : "mr"}">
 <div class="frame">
+${bureauStrip}
 ${blessing}
 <header class="head${photo ? " has-photo" : ""}">
 <div class="who"><p class="title">${escapeHtml(title)}</p>${name ? `<h2 class="name">${escapeHtml(name)}</h2>` : ""}${
@@ -86,6 +121,7 @@ ${blessing}
 ${photo}
 </header>
 ${sections || `<p class="placeholder">${lang === "en" ? "Your details will appear here." : "तुमची माहिती इथे दिसेल."}</p>`}
+${prepared}
 </div>
 </article>`;
 }

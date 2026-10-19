@@ -54,6 +54,29 @@
             <p class="hint">In the print dialog choose “Save as PDF”, paper A4, margins none.</p>
           </section>
 
+          <section class="card plans" aria-labelledby="s4">
+            <h2 id="s4"><span class="num">₹</span> For shops and bureaus</h2>
+            <div id="planPitch">
+              <p class="hint"><strong>Shop plan, ₹499 once:</strong> your shop's name and number printed on every biodata, the Royal layout, setup on your phone and WhatsApp support.<br>
+              <strong>Bureau plan, ₹1,999 a year:</strong> all of that, plus your bureau's name and the member number at the top of each biodata.</p>
+              <p class="hint">Making biodatas for family? You don't need a plan. Everything above is free. <a id="buyLink" href="#">How to buy a plan</a></p>
+              <label class="field"><span>Licence key</span><textarea id="licenceKey" rows="2" spellcheck="false" placeholder="PRCH1.…"></textarea></label>
+              <div class="row">
+                <button id="activateBtn" type="button" class="primary">Activate</button>
+                <button id="demoShopBtn" type="button" class="ghost">Try a demo Shop key</button>
+                <button id="demoBureauBtn" type="button" class="ghost">Try a demo Bureau key</button>
+              </div>
+            </div>
+            <div id="planActive" hidden>
+              <p id="planName" class="status" data-kind="ok"></p>
+              <label class="field"><span>Phone number printed on biodatas</span><input id="bizPhone" type="tel" placeholder="98220 00000"></label>
+              <label class="field" id="memberWrap" hidden><span>Member number for this biodata</span><input id="memberNo" type="text" inputmode="numeric"></label>
+              <div class="row"><button id="removeKeyBtn" type="button" class="ghost">Remove key from this phone</button></div>
+              <p class="hint">Your key and phone number are kept on this phone so you don't retype them. Families' details never are.</p>
+            </div>
+            <p id="planStatus" class="status" role="status"></p>
+          </section>
+
           <p class="foot">No account, no server, no tracking. Works offline after the first visit. <a href="https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay">Source</a></p>
         </div>
 

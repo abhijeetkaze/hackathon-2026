@@ -4,8 +4,13 @@
 import { FIELDS, emptyBiodata } from "./domain/biodata.js";
 import { buildPrompt, parseModelJson, toBiodata } from "./domain/extract.js";
 import { formatHeight } from "./domain/format.js";
-import { LAYOUTS, renderBiodata } from "./domain/render.js";
+import { LAYOUTS, layoutAllowed, renderBiodata } from "./domain/render.js";
+import { DEMO_KEYS, PLANS, verifyKey } from "./domain/licence.js";
 import { gemma, unsupportedReason } from "./adapters/gemma.js";
+
+/** Where "How to buy a plan" points. Change this to your WhatsApp or contact page. */
+const BUY_URL = "https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay#plans";
+const STORE_KEY = "parichay.business"; // licence key + shop phone only; never family details
 
 const EXAMPLE = `Mulga. Naav Rohan Suresh Patil. Janma 12 March 1997, sakali 6:40, Pune. Uchi 5'9".
 BE Mechanical, COEP 2019. Tata Motors Pimpri madhe Senior Engineer.
@@ -15,7 +20,7 @@ Patta: Flat 12, Sai Residency, Kothrud, Pune 411038. Sampark 98220 12345.
 Apeksha: shikshit, Pune madhe naukari.`;
 
 const $ = (id) => document.getElementById(id);
-const state = { biodata: emptyBiodata(), check: new Set(), layout: "traditional", photoUrl: "" };
+const state = { biodata: emptyBiodata(), check: new Set(), layout: "traditional", photoUrl: "", licence: null, phone: "", memberNo: "" };
 const model = gemma();
 
 // ── form ─────────────────────────────────────────────────────────────────────
@@ -149,13 +154,119 @@ function buildLayouts() {
   for (const l of LAYOUTS) {
     const label = document.createElement("label");
     label.className = "layout-option";
-    label.innerHTML = `<input type="radio" name="layout" value="${l.id}"${l.id === state.layout ? " checked" : ""}><span>${l.name}</span>`;
+    label.dataset.paid = l.paid ? "1" : "";
+    label.innerHTML = `<input type="radio" name="layout" value="${l.id}"${l.id === state.layout ? " checked" : ""}><span>${l.name}</span>${l.paid ? '<small class="lock">Shop plan</small>' : ""}`;
     box.append(label);
   }
   box.addEventListener("change", (e) => {
     state.layout = e.target.value;
     render();
   });
+  syncLayouts();
+}
+
+function syncLayouts() {
+  for (const label of $("layouts").querySelectorAll(".layout-option")) {
+    const radio = label.querySelector("input");
+    const allowed = layoutAllowed(radio.value, state.licence);
+    radio.disabled = !allowed;
+    label.classList.toggle("locked", !allowed);
+  }
+  if (!layoutAllowed(state.layout, state.licence)) {
+    state.layout = "traditional";
+    $("layouts").querySelector('input[value="traditional"]').checked = true;
+  }
+}
+
+// ── Shop and Bureau plans ────────────────────────────────────────────────────
+
+function saveBusiness(key) {
+  try {
+    if (key) localStorage.setItem(STORE_KEY, JSON.stringify({ key, phone: state.phone }));
+    else localStorage.removeItem(STORE_KEY);
+  } catch {
+    // private window or storage blocked: the plan still works until the page is closed
+  }
+}
+
+function loadBusiness() {
+  try {
+    return JSON.parse(localStorage.getItem(STORE_KEY) ?? "null");
+  } catch {
+    return null;
+  }
+}
+
+function business() {
+  return state.licence ? { ...state.licence, phone: state.phone, memberNo: state.memberNo } : null;
+}
+
+function showPlan() {
+  const lic = state.licence;
+  $("planPitch").hidden = Boolean(lic);
+  $("planActive").hidden = !lic;
+  if (lic) {
+    const until = lic.until ? `, valid until ${lic.until}` : "";
+    $("planName").textContent = `✓ ${PLANS[lic.plan].en} · ${lic.name}${until}`;
+    $("bizPhone").value = state.phone;
+    $("memberWrap").hidden = lic.plan !== "bureau";
+  }
+  syncLayouts();
+  render();
+}
+
+async function activate(key, { quiet = false } = {}) {
+  const planStatus = $("planStatus");
+  try {
+    state.licence = await verifyKey(key, { today: new Date().toISOString().slice(0, 10) });
+    saveBusiness(key.trim());
+    planStatus.textContent = quiet ? "" : "Activated on this phone. Your name is now on every biodata, and the Royal layout is open.";
+    planStatus.dataset.kind = "ok";
+  } catch (e) {
+    state.licence = null;
+    planStatus.textContent = e instanceof Error ? e.message : String(e);
+    planStatus.dataset.kind = "warn";
+  }
+  showPlan();
+}
+
+function wirePlans() {
+  $("buyLink").href = BUY_URL;
+  $("activateBtn").addEventListener("click", () => activate($("licenceKey").value));
+  $("demoShopBtn").addEventListener("click", () => {
+    $("licenceKey").value = DEMO_KEYS.shop;
+    activate(DEMO_KEYS.shop);
+  });
+  $("demoBureauBtn").addEventListener("click", () => {
+    $("licenceKey").value = DEMO_KEYS.bureau;
+    activate(DEMO_KEYS.bureau);
+  });
+  $("removeKeyBtn").addEventListener("click", () => {
+    state.licence = null;
+    state.phone = "";
+    state.memberNo = "";
+    $("memberNo").value = "";
+    $("licenceKey").value = "";
+    saveBusiness(null);
+    $("planStatus").textContent = "Key removed from this phone.";
+    $("planStatus").dataset.kind = "";
+    showPlan();
+  });
+  $("bizPhone").addEventListener("input", (e) => {
+    state.phone = e.target.value.trim();
+    const saved = loadBusiness();
+    if (saved?.key) saveBusiness(saved.key);
+    render();
+  });
+  $("memberNo").addEventListener("input", (e) => {
+    state.memberNo = e.target.value.trim();
+    render();
+  });
+  const saved = loadBusiness();
+  if (saved?.key) {
+    state.phone = saved.phone ?? "";
+    activate(saved.key, { quiet: true });
+  }
 }
 
 function setPhoto(file) {
@@ -167,13 +278,14 @@ function setPhoto(file) {
 }
 
 function render() {
-  $("sheet").innerHTML = renderBiodata(state.biodata, state.layout, state.photoUrl);
+  $("sheet").innerHTML = renderBiodata(state.biodata, state.layout, state.photoUrl, business());
 }
 
 // ── start ────────────────────────────────────────────────────────────────────
 
 buildForm();
 buildLayouts();
+wirePlans();
 render();
 
 $("exampleBtn").addEventListener("click", () => {

@@ -211,11 +211,54 @@ progress { width: 100%; height: 8px; accent-color: var(--saffron); }
 .sheet-bilingual { font-size: calc(3.6 * var(--u)); }
 .sheet-bilingual .block dl { grid-template-columns: calc(62 * var(--u)) 1fr; }
 
+/* Shop / Bureau lines */
+.frame { display: flex; flex-direction: column; }
+.bureau {
+  margin: calc(-8 * var(--u)) calc(-10 * var(--u)) calc(5 * var(--u));
+  padding: calc(2.2 * var(--u)) calc(6 * var(--u));
+  background: #7a1f2b; color: #fff6e0;
+  text-align: center; font-weight: 600; font-size: calc(3.6 * var(--u)); letter-spacing: 0.04em;
+}
+.prepared {
+  margin-top: auto;
+  padding-top: calc(2.5 * var(--u));
+  border-top: calc(0.3 * var(--u)) dashed #d9b98a;
+  text-align: center;
+  font-family: "Noto Sans Devanagari", sans-serif;
+  font-size: calc(3.2 * var(--u));
+  color: #6b4a3a;
+}
+
+/* Royal (Shop and Bureau plans) */
+.sheet-royal { background: #fffaf0; }
+.sheet-royal .frame {
+  border: calc(1.8 * var(--u)) solid #7a1f2b;
+  outline: calc(0.7 * var(--u)) solid #c9962b;
+  outline-offset: calc(-4 * var(--u));
+}
+.sheet-royal .blessing {
+  margin: calc(-8 * var(--u)) calc(-10 * var(--u)) calc(5 * var(--u));
+  padding: calc(3 * var(--u));
+  background: #7a1f2b; color: #f3d58a; letter-spacing: 0.08em;
+}
+.sheet-royal .bureau + .blessing { margin-top: calc(-5 * var(--u)); }
+.sheet-royal .title { color: #9c6b10; letter-spacing: 0.14em; }
+.sheet-royal .name { color: #7a1f2b; }
+.sheet-royal .block h3 { color: #7a1f2b; border-bottom: calc(0.6 * var(--u)) solid #c9962b; }
+.sheet-royal .block dt { color: #7a1f2b; }
+.sheet-royal .photo { border-color: #c9962b; }
+
+/* plans card */
+.plans .num { font-size: 0.8rem; }
+.layout-option.locked { opacity: 0.55; cursor: not-allowed; }
+.lock { font-size: 0.72rem; font-weight: 600; padding: 0 7px; border-radius: 999px; background: var(--saffron); color: #1b1716; }
+.layout-option:not(.locked) .lock { background: var(--ok); color: #fff; }
+
 /* ── print: only the sheet, at real A4 size ─────────────────────────────── */
 @page { size: A4; margin: 0; }
 @media print {
   body { background: #fff; }
-  .masthead, .steps { display: none; }
+  .masthead, .steps, .plans { display: none; }
   .app, .layout { display: block; max-width: none; padding: 0; margin: 0; }
   .preview { position: static; container-type: normal; }
   #sheet { --u: 1mm; }

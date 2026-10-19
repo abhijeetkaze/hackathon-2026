@@ -1,0 +1,225 @@
+:root {
+  --bg: #f6f1e9;
+  --card: #fffdf9;
+  --ink: #2a2320;
+  --muted: #6e625b;
+  --line: #e4d9cc;
+  --maroon: #7a1f2b;
+  --maroon-ink: #ffffff;
+  --saffron: #d9822b;
+  --warn: #8a4b00;
+  --ok: #1f6b3a;
+  --focus: #d9822b;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1716;
+    --card: #252020;
+    --ink: #f1e9e2;
+    --muted: #b8aca4;
+    --line: #3d3534;
+    --maroon: #d06a77;
+    --maroon-ink: #1b1716;
+    --saffron: #e9a25a;
+    --warn: #f0b36a;
+    --ok: #7fd19b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1716;
+  --card: #252020;
+  --ink: #f1e9e2;
+  --muted: #b8aca4;
+  --line: #3d3534;
+  --maroon: #d06a77;
+  --maroon-ink: #1b1716;
+  --saffron: #e9a25a;
+  --warn: #f0b36a;
+  --ok: #7fd19b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 "Noto Sans Devanagari", system-ui, sans-serif;
+}
+
+.app { max-width: 1180px; margin: 0 auto; padding: 20px 16px 40px; }
+
+.masthead h1 {
+  margin: 0;
+  font: 700 2rem/1.1 "Noto Serif", "Noto Serif Devanagari", serif;
+  color: var(--maroon);
+}
+.masthead h1 span { font-family: "Noto Serif Devanagari", serif; font-weight: 600; margin-left: 0.25em; }
+.masthead p { margin: 6px 0 20px; color: var(--muted); max-width: 60ch; }
+
+.layout { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  .preview { position: sticky; top: 16px; }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.card h2 { margin: 0 0 4px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+.num {
+  display: inline-grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--maroon); color: var(--maroon-ink); font-size: 0.85rem;
+}
+.hint { margin: 0 0 12px; color: var(--muted); font-size: 0.92rem; }
+
+textarea, input, select {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+textarea:focus, input:focus, select:focus, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+.row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+button {
+  font: inherit; font-weight: 600;
+  border-radius: 8px; padding: 9px 16px; cursor: pointer;
+  border: 1px solid var(--maroon);
+}
+button.primary { background: var(--maroon); color: var(--maroon-ink); }
+button.ghost { background: transparent; color: var(--maroon); }
+button:disabled { opacity: 0.6; cursor: progress; }
+
+.status { margin: 10px 0 0; font-size: 0.92rem; min-height: 1.4em; }
+.status[data-kind="warn"] { color: var(--warn); }
+.status[data-kind="ok"] { color: var(--ok); }
+progress { width: 100%; height: 8px; accent-color: var(--saffron); }
+
+#form { display: grid; gap: 10px; }
+.pair { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 480px) { .pair { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 4px; font-size: 0.9rem; }
+.field > span { color: var(--muted); }
+.chip {
+  display: none;
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0 7px; border-radius: 999px;
+  background: var(--saffron); color: #1b1716;
+}
+.hint .chip { display: inline-block; }
+.needs-check .chip { display: inline-block; }
+.needs-check input, .needs-check textarea { border-color: var(--saffron); border-width: 2px; }
+.height-hint { color: var(--muted); }
+
+.layouts { border: 0; padding: 0; margin: 0 0 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.layout-option { display: flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.layout-option input { width: auto; accent-color: var(--maroon); }
+.file { display: grid; gap: 4px; font-size: 0.9rem; color: var(--muted); margin-bottom: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.foot { color: var(--muted); font-size: 0.85rem; }
+.foot a { color: var(--maroon); }
+
+/* ── the sheet ─────────────────────────────────────────────────────────────
+   Sized in --u, which is 1mm of A4 paper. On screen the preview's width is 210u,
+   so the page scales to any phone; in print --u is exactly 1mm. */
+
+.preview { container-type: inline-size; }
+#sheet { --u: calc(100cqw / 210); }
+
+.sheet {
+  width: calc(210 * var(--u));
+  min-height: calc(297 * var(--u));
+  padding: calc(10 * var(--u));
+  background: #fffaf0;
+  color: #2a1f1a;
+  font-family: "Noto Serif Devanagari", "Noto Serif", serif;
+  font-size: calc(3.9 * var(--u));
+  line-height: 1.45;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.frame {
+  min-height: calc(277 * var(--u));
+  padding: calc(8 * var(--u)) calc(10 * var(--u));
+  border: calc(1.2 * var(--u)) double #7a1f2b;
+  outline: calc(0.4 * var(--u)) solid #d9822b;
+  outline-offset: calc(-3 * var(--u));
+}
+.blessing { text-align: center; margin: 0 0 calc(3 * var(--u)); color: #b5541c; font-weight: 600; }
+.head { display: flex; justify-content: space-between; align-items: flex-start; gap: calc(6 * var(--u)); margin-bottom: calc(5 * var(--u)); }
+.head:not(.has-photo) { justify-content: center; text-align: center; }
+.title {
+  margin: 0;
+  font-size: calc(4.4 * var(--u));
+  letter-spacing: 0.06em;
+  color: #7a1f2b;
+  font-weight: 700;
+}
+.name { margin: calc(1 * var(--u)) 0 0; font-size: calc(7.4 * var(--u)); line-height: 1.2; color: #2a1f1a; }
+.subname { margin: calc(0.5 * var(--u)) 0 0; font-size: calc(5 * var(--u)); color: #5c4a40; }
+.photo {
+  width: calc(38 * var(--u)); height: calc(48 * var(--u));
+  object-fit: cover;
+  border: calc(0.8 * var(--u)) solid #d9822b;
+  border-radius: calc(1.5 * var(--u));
+  flex: none;
+}
+.block { margin-bottom: calc(4 * var(--u)); break-inside: avoid; }
+.block h3 {
+  margin: 0 0 calc(1.5 * var(--u));
+  font-size: calc(4.3 * var(--u));
+  color: #7a1f2b;
+  border-bottom: calc(0.3 * var(--u)) solid #e7c9a0;
+  padding-bottom: calc(0.8 * var(--u));
+}
+.block dl {
+  display: grid;
+  grid-template-columns: calc(52 * var(--u)) 1fr;
+  gap: calc(1 * var(--u)) calc(4 * var(--u));
+  margin: 0;
+}
+.block dt { color: #6b4a3a; font-weight: 600; }
+.block dt::after { content: " :"; }
+.block dd { margin: 0; white-space: pre-line; }
+.placeholder { text-align: center; color: #9a8a80; margin-top: calc(40 * var(--u)); }
+
+/* Modern (English) */
+.sheet-modern { background: #ffffff; font-family: "Noto Serif", "Noto Serif Devanagari", serif; }
+.sheet-modern .frame { border: 0; outline: 0; border-left: calc(2.5 * var(--u)) solid #7a1f2b; padding-left: calc(9 * var(--u)); }
+.sheet-modern .title { font-family: "Noto Sans Devanagari", sans-serif; font-weight: 600; font-size: calc(3.6 * var(--u)); text-transform: uppercase; letter-spacing: 0.18em; color: #9a6a4a; }
+.sheet-modern .head:not(.has-photo) { justify-content: flex-start; text-align: left; }
+.sheet-modern .block h3 { font-family: "Noto Sans Devanagari", sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-size: calc(3.5 * var(--u)); border-bottom-color: #eee3d8; }
+.sheet-modern .block dt { font-family: "Noto Sans Devanagari", sans-serif; font-weight: 400; color: #7d6b60; }
+.sheet-modern .block dt::after { content: ""; }
+.sheet-modern .photo { border-color: #7a1f2b; border-width: calc(0.5 * var(--u)); }
+
+/* Bilingual: two scripts per line need a little more room */
+.sheet-bilingual { font-size: calc(3.6 * var(--u)); }
+.sheet-bilingual .block dl { grid-template-columns: calc(62 * var(--u)) 1fr; }
+
+/* ── print: only the sheet, at real A4 size ─────────────────────────────── */
+@page { size: A4; margin: 0; }
+@media print {
+  body { background: #fff; }
+  .masthead, .steps { display: none; }
+  .app, .layout { display: block; max-width: none; padding: 0; margin: 0; }
+  .preview { position: static; container-type: normal; }
+  #sheet { --u: 1mm; }
+  /* a hair under A4 so rounding never spills a blank second page */
+  .sheet { box-shadow: none; min-height: 296mm; }
+  .frame { min-height: 276mm; }
+}

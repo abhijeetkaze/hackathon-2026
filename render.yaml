@@ -1,0 +1,16 @@
+# Render Blueprint. Each hackathon project in this repo is its own static site.
+# Deploy: Render dashboard → New → Blueprint → pick this repo.
+services:
+  - type: web
+    name: parichay
+    runtime: static
+    rootDir: parichay
+    buildCommand: npm test
+    staticPublishPath: web
+    headers:
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff

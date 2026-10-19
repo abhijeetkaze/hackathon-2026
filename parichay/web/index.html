@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Parichay · परिचय</title>
+    <meta name="description" content="Make a Marathi or English marriage biodata on your phone. Gemma runs on the device, so family details never leave it.">
+    <meta name="theme-color" content="#7a1f2b">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="masthead">
+        <h1>Parichay <span lang="mr">परिचय</span></h1>
+        <p>A marriage biodata in two minutes. Gemma runs on this phone, so nothing you type or the photo you add is sent anywhere.</p>
+      </header>
+
+      <main class="layout">
+        <div class="steps">
+          <section class="card" aria-labelledby="s1">
+            <h2 id="s1"><span class="num">1</span> Tell it the details</h2>
+            <p class="hint">Write the way you'd say it: Marathi, Hindi, English or a mix.</p>
+            <textarea id="freeText" rows="7" placeholder="mulga, naav Rohan Suresh Patil, janma 12 March 1997 sakali 6:40 Pune, uchi 5'9&quot;, BE Mech…"></textarea>
+            <div class="row">
+              <button id="fillBtn" type="button" class="primary">Fill the form with Gemma</button>
+              <button id="exampleBtn" type="button" class="ghost">Try an example</button>
+            </div>
+            <p id="aiStatus" class="status" role="status"></p>
+            <progress id="aiProgress" max="1" value="0" hidden></progress>
+          </section>
+
+          <section class="card" aria-labelledby="s2">
+            <h2 id="s2"><span class="num">2</span> Check the details</h2>
+            <p class="hint">Everything is editable. Fields marked <span class="chip">check</span> need a look: name spellings in Marathi, or a date Parichay couldn't read for sure. Blank fields are left off the biodata.</p>
+            <form id="form" autocomplete="off"></form>
+          </section>
+
+          <section class="card" aria-labelledby="s3">
+            <h2 id="s3"><span class="num">3</span> Layout, photo, print</h2>
+            <fieldset id="layouts" class="layouts"><legend class="sr">Layout</legend></fieldset>
+            <label class="file">
+              <span>Photo (stays on this phone)</span>
+              <input id="photo" type="file" accept="image/*">
+            </label>
+            <button id="removePhoto" type="button" class="ghost" hidden>Remove photo</button>
+            <div class="row">
+              <button id="printBtn" type="button" class="primary">Print / Save as PDF</button>
+            </div>
+            <p class="hint">In the print dialog choose “Save as PDF”, paper A4, margins none.</p>
+          </section>
+
+          <p class="foot">No account, no server, no tracking. Works offline after the first visit. <a href="https://github.com/abhijeetkaze/hackathon-2026/tree/main/parichay">Source</a></p>
+        </div>
+
+        <aside class="preview" aria-label="Biodata preview">
+          <div id="sheet"></div>
+        </aside>
+      </main>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

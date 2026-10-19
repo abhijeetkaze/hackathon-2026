@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#7a1f2b"/>
+  <rect x="17" y="11" width="30" height="42" rx="3" fill="#fffaf0"/>
+  <rect x="20" y="14" width="24" height="36" rx="2" fill="none" stroke="#d9822b" stroke-width="1.5"/>
+  <text x="32" y="33" font-family="'Noto Serif Devanagari', serif" font-size="15" font-weight="700" text-anchor="middle" fill="#7a1f2b">प</text>
+  <rect x="24" y="38" width="16" height="2" rx="1" fill="#d9822b"/>
+  <rect x="26" y="43" width="12" height="2" rx="1" fill="#e7c9a0"/>
+</svg>

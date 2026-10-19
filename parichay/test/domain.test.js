@@ -183,3 +183,14 @@ test("values are escaped", () => {
 test("an empty biodata renders a placeholder, not an empty page", () => {
   assert.ok(renderBiodata(emptyBiodata(), "modern").includes("Your details will appear here."));
 });
+
+test("the service worker precaches every shell file that exists, and nothing that doesn't", async () => {
+  const { readFileSync, readdirSync, existsSync } = await import("node:fs");
+  const { join } = await import("node:path");
+  const web = new URL("../web/", import.meta.url).pathname;
+  const sw = readFileSync(join(web, "sw.js"), "utf8");
+  const listed = [...sw.matchAll(/"\.\/([^"]*)"/g)].map((m) => m[1]).filter(Boolean);
+  for (const f of listed) assert.ok(existsSync(join(web, f)), `sw.js lists missing ${f}`);
+  const walk = (d) => readdirSync(join(web, d), { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]));
+  for (const f of walk("js")) assert.ok(listed.includes(f), `sw.js doesn't precache ${f}`);
+});

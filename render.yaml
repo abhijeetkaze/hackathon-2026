@@ -16,19 +16,3 @@ services:
       - path: /*
         name: X-Content-Type-Options
         value: nosniff
-
-  - type: web
-    name: just-one
-    runtime: static
-    rootDir: just-one
-    buildCommand: npm test
-    staticPublishPath: web
-    buildFilter:
-      paths: ["just-one/**"] # only redeploy when this project changes
-    headers:
-      - path: /sw.js
-        name: Cache-Control
-        value: no-cache
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff

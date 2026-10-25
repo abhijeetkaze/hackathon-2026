@@ -4,7 +4,7 @@
 //   Gemma weights  → kept by WebLLM in its own Cache Storage
 // Bump VERSION when shell files change.
 
-const VERSION = "2";
+const VERSION = "3";
 const SHELL = `just-one-shell-${VERSION}`;
 const RUNTIME = "just-one-runtime";
 const PRECACHE = [

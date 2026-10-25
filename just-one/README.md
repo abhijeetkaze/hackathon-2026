@@ -1,5 +1,7 @@
 # Just One
 
+> **Just One now lives in its own repository: [abhijeetkaze/hackathon-2026-just-one](https://github.com/abhijeetkaze/hackathon-2026-just-one).** This copy only keeps the original demo URL running.
+
 *Dump your whole to-do list once. Every day it shows you just one thing.*
 
 Everything you've been putting off goes into one text box, once, as messy as you like.
